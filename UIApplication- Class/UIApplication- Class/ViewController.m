@@ -20,24 +20,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您的手机支持3dtouch" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-        
-        /** 注册当前view */
-        [self registerForPreviewingWithDelegate:self sourceView:self.view];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"很遗憾您的手机不支持3dtouch" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }
+//    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您的手机支持3dtouch" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
+//        
+//        /** 注册当前view */
+//        [self registerForPreviewingWithDelegate:self sourceView:self.view];
+//    }
+//    else
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"很遗憾您的手机不支持3dtouch" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
+//    
+//    mainTable = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+//    mainTable.delegate = self;
+//    mainTable.dataSource = self;
+//    [self.view addSubview:mainTable];
+    [self showOrHideNavPrompt];
+}
+- (void)showOrHideNavPrompt
+{
+    NSUInteger count = 0;
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)); // 1
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){ // 2
+        if (count == 0) {
+            [self.navigationItem setPrompt:@"Add photos with faces to Googlyify them!"];
+        } else {
+            [self.navigationItem setPrompt:nil];
+        }
+    });
     
-    mainTable = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    mainTable.delegate = self;
-    mainTable.dataSource = self;
-    [self.view addSubview:mainTable];
+    dispatch_time_t pop = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(pop, dispatch_get_main_queue(), ^{
+        
+    });
+   
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -100,15 +120,15 @@
 - (void)previewingContext:(id <UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit{
     [self showViewController:viewControllerToCommit sender:self];
 }
-- (UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
-}
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
-- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation{
-   return UIStatusBarAnimationSlide;
-}
+//- (UIStatusBarStyle)preferredStatusBarStyle{
+//    return UIStatusBarStyleLightContent;
+//}
+//- (BOOL)prefersStatusBarHidden{
+//    return YES;
+//}
+//- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation{
+//   return UIStatusBarAnimationSlide;
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
